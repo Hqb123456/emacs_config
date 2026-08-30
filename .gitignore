@@ -1,0 +1,25 @@
+# 编译输出
+*.elc
+*.eln
+
+# 包管理
+elpa/
+eln-cache/
+transient/
+straight/
+use-package/
+
+# 项目缓存
+.projectile
+projectile-bookmarks.eld
+projectile-frecency.eld
+
+# Emacs 自动备份
+*~
+\#*\#
+.\#*
+
+# 其他临时文件
+recentf
+tramp
+.eshell/
