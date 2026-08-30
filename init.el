@@ -203,6 +203,7 @@ VARIANT 可选: 'Iosevka', 'Iosevka Term', 'Iosevka Fixed', 'Iosevka Curly'"
 (global-set-key (kbd "C-S-<right>") 'windmove-right)
 (global-set-key (kbd "C-z") 'set-mark-command)
 (global-set-key (kbd "C-M-z") 'rectangle-mark-mode)
+(global-set-key (kbd "C-c c") 'compile)
 
 (global-set-key (kbd "C-,") 'rc/duplicate-line)
 
@@ -357,11 +358,20 @@ VARIANT 可选: 'Iosevka', 'Iosevka Term', 'Iosevka Fixed', 'Iosevka Curly'"
   :hook ((nix-mode . lsp)
          (c++-mode . lsp)
          (lua-mode . lsp))
-  :custom (lsp-auto-guess-root t))
+  :custom (lsp-auto-guess-root t)
+  :bind (:map lsp-mode-map
+              ("M-." . xref-find-definitions)
+              ("M-?" . xref-find-references)
+              ("M-r" . lsp-rename)
+              ("C-c l f" . lsp-format-buffer)
+              ("C-c l a" . lsp-execute-code-action)))
 
 (use-package lsp-ui
   :ensure t
-  :hook (lsp-mode . lsp-ui-mode))
+  :hook (lsp-mode . lsp-ui-mode)
+  :bind (:map lsp-ui-mode-map
+              ("C-c l h" . lsp-ui-doc-glance)
+              ("C-c l d" . lsp-ui-peek-find-diagnostics)))
 
 ;; 主要模式
 (use-package markdown-mode :ensure t)
