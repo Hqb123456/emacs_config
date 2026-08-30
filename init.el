@@ -11,8 +11,7 @@
         ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 
 ;; 兼容 Emacs 27 以下版本（新版会自动初始化）
-(when (< emacs-major-version 27)
-  (package-initialize))
+(package-initialize)
 
 ;; 安装 use-package
 (unless (package-installed-p 'use-package)
@@ -351,6 +350,48 @@ VARIANT 可选: 'Iosevka', 'Iosevka Term', 'Iosevka Fixed', 'Iosevka Curly'"
 (use-package vterm
   :ensure t
   :bind ("C-c C-t " . vterm))
+
+;; LSP（精简配置，仅针对 nix/c/c++/lua）
+(use-package lsp-mode
+  :ensure t
+  :hook ((nix-mode . lsp)
+         (c++-mode . lsp)
+         (lua-mode . lsp))
+  :custom (lsp-auto-guess-root t))
+
+(use-package lsp-ui
+  :ensure t
+  :hook (lsp-mode . lsp-ui-mode))
+
+;; 主要模式
+(use-package markdown-mode :ensure t)
+(use-package yaml-mode :ensure t)
+(use-package json-mode :ensure t)
+
+;; 编辑工具
+(use-package multiple-cursors
+  :ensure t
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C-S-c C-n" . mc/mark-next-like-this)
+         ("C-S-c C-p" . mc/mark-previous-like-this)
+         ("C-S-c C-a" . mc/mark-all-like-this)))
+
+(use-package expand-region
+  :ensure t
+  :bind ("C-=" . er/expand-region))
+
+;; 文件树
+(use-package treemacs
+  :ensure t
+  :bind ("C-c t" . treemacs-select-window))
+
+;; UI 增强
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+
+(use-package emojify
+  :ensure t)
 
 (add-hook 'c++-mode-hook
           (lambda ()
