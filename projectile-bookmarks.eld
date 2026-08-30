@@ -1,0 +1,1 @@
+("~/nixos/" "~/new/new_nixos_config/" "~/KDE-to-mac/" "~/new/" "~/github_nixos/" "~/Programming/class/")

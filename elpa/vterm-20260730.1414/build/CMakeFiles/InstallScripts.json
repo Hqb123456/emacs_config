@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/shorin/.emacs.d/elpa/vterm-20260730.1414/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
