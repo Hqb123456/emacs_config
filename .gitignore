@@ -23,3 +23,6 @@ projectile-frecency.eld
 recentf
 tramp
 .eshell/
+.cache/
+.lsp-session-v1
+url/
