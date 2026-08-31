@@ -40,6 +40,31 @@
   (setq dired-recursive-deletes 'top)         ; 递归删除
   (setq dired-recursive-copies 'always))      ; 递归复制
 
+;; 1. diredfl - 彩色文件类型
+(use-package diredfl
+  :ensure t
+  :config
+  (diredfl-global-mode 1))   ; 全局启用彩色高亮
+
+;; 2. dired-preview - 轻量级预览
+(use-package dired-preview
+  :ensure t
+  :hook (dired-mode . dired-preview-mode)   ; 进入dired时自动启用
+  :custom
+  (dired-preview-max-size 10)               ; 限制预览文件大小(10MB)，避免卡顿
+  (dired-preview-delay 0.01)                 ; 光标停留0.5秒后触发预览
+  :config
+  (dired-preview-global-mode 1))
+
+;; 3. dired-subtree - 缩进式目录展开
+(use-package dired-subtree
+  :ensure t
+  :bind (:map dired-mode-map
+              ("TAB" . dired-subtree-toggle)   ; TAB展开/收起子目录
+              ("C-c C-i" . dired-subtree-insert)) ; 可选：插入子目录
+  :config
+  (setq dired-subtree-use-backgrounds nil))   ; 可选：不添加背景色，保持简洁
+
 ;; 关闭自动保存
 (setq auto-save-default nil)
 (setq auto-save-list-file-prefix nil)
