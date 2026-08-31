@@ -52,7 +52,7 @@
   :hook (dired-mode . dired-preview-mode)   ; 进入dired时自动启用
   :custom
   (dired-preview-max-size 10)               ; 限制预览文件大小(10MB)，避免卡顿
-  (dired-preview-delay 0.01)                 ; 光标停留0.5秒后触发预览
+  (dired-preview-delay 0.01)                 ; 光标停留0.01秒后触发预览
   :config
   (dired-preview-global-mode 1))
 
