@@ -269,6 +269,9 @@ VARIANT 可选: 'Iosevka', 'Iosevka Term', 'Iosevka Fixed', 'Iosevka Curly'"
   :config
   (marginalia-mode 1))
 
+(use-package embark-consult
+  :ensure t)
+
 (use-package embark
   :ensure t
   :bind
@@ -296,9 +299,6 @@ VARIANT 可选: 'Iosevka', 'Iosevka Term', 'Iosevka Fixed', 'Iosevka Curly'"
   :ensure t)
 
 (use-package catppuccin-theme
-  :ensure t)
-
-(use-package gruber-darker-theme
   :ensure t)
 
 (use-package doom-themes
@@ -350,15 +350,15 @@ VARIANT 可选: 'Iosevka', 'Iosevka Term', 'Iosevka Fixed', 'Iosevka Curly'"
   (setq undo-tree-auto-save-history nil)
   (global-set-key (kbd "C-c u") 'undo-tree-visualize))  ; 可视化撤销树
 
-(use-package eglot
-  :ensure t
-  :hook (prog-mode . eglot-ensure))
+;; (use-package eglot
+;;   :ensure t
+;;   :hook (prog-mode . eglot-ensure))
 
 (use-package company
   :ensure t
   :hook (after-init . global-company-mode) ;; 启动时启用
   :custom
-  ;; 延迟 0.1 秒弹出候选
+  ;; 延迟 0.01 秒弹出候选
   (company-idle-delay 0.01)
   ;; 输入 2 个字符开始补全
   (company-minimum-prefix-length 1)
@@ -416,10 +416,21 @@ VARIANT 可选: 'Iosevka', 'Iosevka Term', 'Iosevka Fixed', 'Iosevka Curly'"
   :ensure t
   :bind ("C-=" . er/expand-region))
 
-;; 文件树
-(use-package treemacs
+(use-package deadgrep
   :ensure t
-  :bind ("C-c t" . treemacs-select-window))
+  :defer t
+  :bind ("C-c s" . deadgrep))
+
+(use-package consult
+  :ensure t
+  :bind
+  (("C-x b" . consult-buffer)           ;; 切换缓冲区
+   ("M-g g" . consult-goto-line)        ;; 跳转到行号
+   ("M-s l" . consult-line)             ;; 搜索当前行
+   ("M-s g" . consult-grep)             ;; 在项目中搜索
+   ("M-s f" . consult-find)             ;; 查找文件
+   ("M-y" . consult-yank-pop)
+   ("M-s i" . consult-imenu)))         ;; 增强的粘贴历史
 
 ;; UI 增强
 (use-package doom-modeline
@@ -435,21 +446,22 @@ VARIANT 可选: 'Iosevka', 'Iosevka Term', 'Iosevka Fixed', 'Iosevka Curly'"
             (setq c-basic-offset 4)        ; 缩进宽度 4
             (setq indent-tabs-mode nil)))    ; 使用空格代替 Tab
 
-(use-package deadgrep
+(use-package flycheck
   :ensure t
-  :bind ("C-c s" . deadgrep))
+  :hook (prog-mode . flycheck-mode)  ; 所有编程模式启用
+  :config
+  (global-flycheck-mode t))          ; 全局启用
 
-(use-package consult
+;; 错误行美化插件 Flyover
+(use-package flyover
   :ensure t
-  :bind
-  (("C-x b" . consult-buffer)           ;; 切换缓冲区
-   ("C-x C-f" . consult-find)           ;; 查找文件（预览）
-   ("M-g g" . consult-goto-line)        ;; 跳转到行号
-   ("M-s l" . consult-line)             ;; 搜索当前行
-   ("M-s g" . consult-grep)             ;; 在项目中搜索
-   ("M-s f" . consult-find)             ;; 查找文件
-   ("M-y" . consult-yank-pop)
-   ("M-s c" . consult-imenu)))         ;; 增强的粘贴历史
+  ;; 如果你用的是 Flycheck，就加这一行
+  :hook (flycheck-mode . flyover-mode)
+  ;; 如果你用的是 Flymake，就加这一行
+  ;:hook (flymake-mode . flyover-mode)
+  :custom
+  ;; 可选：设置显示在错误信息下面的连接线样式
+  (flyover-virtual-line-type 'curved-arrow)) ; 默认是带箭头的曲线
 
 ;; 9.
 (my-load-font-config)

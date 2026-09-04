@@ -18,7 +18,8 @@
 		      marginalia monokai-theme move-text
 		      multiple-cursors nix-mode orderless projectile
 		      rainbow-delimiters treemacs undo-tree vertico
-		      vterm yaml-mode)))
+		      vterm yaml-mode))
+ '(safe-local-variable-values '((eval when (fboundp 'rainbow-mode) (rainbow-mode 1)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
