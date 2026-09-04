@@ -435,6 +435,22 @@ VARIANT 可选: 'Iosevka', 'Iosevka Term', 'Iosevka Fixed', 'Iosevka Curly'"
             (setq c-basic-offset 4)        ; 缩进宽度 4
             (setq indent-tabs-mode nil)))    ; 使用空格代替 Tab
 
+(use-package deadgrep
+  :ensure t
+  :bind ("C-c s" . deadgrep))
+
+(use-package consult
+  :ensure t
+  :bind
+  (("C-x b" . consult-buffer)           ;; 切换缓冲区
+   ("C-x C-f" . consult-find)           ;; 查找文件（预览）
+   ("M-g g" . consult-goto-line)        ;; 跳转到行号
+   ("M-s l" . consult-line)             ;; 搜索当前行
+   ("M-s g" . consult-grep)             ;; 在项目中搜索
+   ("M-s f" . consult-find)             ;; 查找文件
+   ("M-y" . consult-yank-pop)
+   ("M-s c" . consult-imenu)))         ;; 增强的粘贴历史
+
 ;; 9.
 (my-load-font-config)
 (load custom-file)
