@@ -1,4 +1,5 @@
-;; init.el
+;; -*- lexical-binding: t; -*-
+(setq warning-suppress-types '((files lexical-binding)))
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 ;; 包管理器设置

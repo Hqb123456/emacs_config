@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; 由 my-save-font-config 自动生成
 (set-face-attribute 'default nil
                     :family "Iosevka Nerd Font Mono"
