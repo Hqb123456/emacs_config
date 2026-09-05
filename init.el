@@ -362,8 +362,8 @@ VARIANT 可选: 'Iosevka', 'Iosevka Term', 'Iosevka Fixed', 'Iosevka Curly'"
   (company-idle-delay 0.01)
   ;; 输入 2 个字符开始补全
   (company-minimum-prefix-length 1)
-  ;; 候选列表最多显示 20 条
-  (company-tooltip-limit 20)
+  ;; 候选列表最多显示 10 条
+  (company-tooltip-limit 10)
   ;; 对齐注释
   (company-tooltip-align-annotations t)
   ;; 显示快捷键提示
@@ -381,10 +381,14 @@ VARIANT 可选: 'Iosevka', 'Iosevka Term', 'Iosevka Fixed', 'Iosevka Curly'"
 ;; LSP（精简配置，仅针对 nix/c/c++/lua）
 (use-package lsp-mode
   :ensure t
+  :defer t
   :hook ((nix-mode . lsp)
          (c++-mode . lsp)
          (lua-mode . lsp))
-  :custom (lsp-auto-guess-root t)
+  :custom
+  (lsp-auto-guess-root t)
+  (lsp-enable-indentation nil)    ; 🔥 禁用 lsp 自动缩进
+  (lsp-enable-on-type-formatting nil)  ; 🔥 禁用输入时自动格式化
   :bind (:map lsp-mode-map
               ("M-." . xref-find-definitions)
               ("M-?" . xref-find-references)
@@ -398,6 +402,24 @@ VARIANT 可选: 'Iosevka', 'Iosevka Term', 'Iosevka Fixed', 'Iosevka Curly'"
   :bind (:map lsp-ui-mode-map
               ("C-c l h" . lsp-ui-doc-glance)
               ("C-c l d" . lsp-ui-peek-find-diagnostics)))
+
+
+(use-package flycheck
+  :ensure t
+  :hook (prog-mode . flycheck-mode)  ; 所有编程模式启用
+  :config
+  (global-flycheck-mode t))          ; 全局启用
+
+;; 错误行美化插件 Flyover
+(use-package flyover
+  :ensure t
+  ;; 如果你用的是 Flycheck，就加这一行
+  :hook (flycheck-mode . flyover-mode)
+  ;; 如果你用的是 Flymake，就加这一行
+  ;:hook (flymake-mode . flyover-mode)
+  :custom
+  ;; 可选：设置显示在错误信息下面的连接线样式
+  (flyover-virtual-line-type 'curved-arrow)) ; 默认是带箭头的曲线
 
 ;; 主要模式
 (use-package markdown-mode :ensure t)
@@ -440,28 +462,22 @@ VARIANT 可选: 'Iosevka', 'Iosevka Term', 'Iosevka Fixed', 'Iosevka Curly'"
 (use-package emojify
   :ensure t)
 
-(add-hook 'c++-mode-hook
+;(add-hook 'c++-mode-hook
+;          (lambda ()
+;            (c-set-style "linux")          ; 使用 Linux 内核风格，缩进 4 空格
+;            (setq c-basic-offset 4)        ; 缩进宽度 4
+;            (setq indent-tabs-mode nil)))    ; 使用空格代替 Tab
+
+;; 改成这样：
+(add-hook 'c-mode-common-hook
           (lambda ()
-            (c-set-style "linux")          ; 使用 Linux 内核风格，缩进 4 空格
-            (setq c-basic-offset 4)        ; 缩进宽度 4
-            (setq indent-tabs-mode nil)))    ; 使用空格代替 Tab
-
-(use-package flycheck
-  :ensure t
-  :hook (prog-mode . flycheck-mode)  ; 所有编程模式启用
-  :config
-  (global-flycheck-mode t))          ; 全局启用
-
-;; 错误行美化插件 Flyover
-(use-package flyover
-  :ensure t
-  ;; 如果你用的是 Flycheck，就加这一行
-  :hook (flycheck-mode . flyover-mode)
-  ;; 如果你用的是 Flymake，就加这一行
-  ;:hook (flymake-mode . flyover-mode)
-  :custom
-  ;; 可选：设置显示在错误信息下面的连接线样式
-  (flyover-virtual-line-type 'curved-arrow)) ; 默认是带箭头的曲线
+            (c-set-style "linux")                ; 🔥 设置风格
+            (setq c-basic-offset 4)              ; 🔥 设置缩进为 4
+            (setq indent-tabs-mode nil)          ; 🔥 使用空格
+            (c-set-offset 'substatement-open 0)
+            (c-set-offset 'case-label 4)
+            (c-set-offset 'access-label -2)
+            (c-set-offset 'innamespace 0)))
 
 ;; 9.
 (my-load-font-config)
