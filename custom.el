@@ -17,8 +17,8 @@
 		      gruber-darker-theme json-mode lsp-ui magit
 		      marginalia monokai-theme move-text
 		      multiple-cursors nix-mode orderless projectile
-		      rainbow-delimiters treemacs undo-tree vertico
-		      vterm yaml-mode))
+		      rainbow-delimiters smooth-scrolling treemacs
+		      undo-tree vertico vterm yaml-mode))
  '(safe-local-variable-values '((eval when (fboundp 'rainbow-mode) (rainbow-mode 1)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
